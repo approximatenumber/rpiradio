@@ -46,11 +46,15 @@ def show_info():
     Prints messages on LCD
     """
     mpc_state = mpc.status()['state']
-    current_song = mpc.currentsong()['file']
     vol_value = mpc.status()['volume']
+    try:
+        current_song = mpc.currentsong()['file']
+        current_song_id = int(mpc.status()['song'])+1
+    except KeyError:
+        current_song = "---"
+        current_song_id = "---"
 
     playlistlength = mpc.status()['playlistlength']
-    current_song_id = int(mpc.status()['song'])+1
 
     lcd.printString(16*" ", 0, 0)
     lcd.printString(mpc_state.upper(), 0, 0)
@@ -72,12 +76,8 @@ def play():
     show_info()
 
 def next():
-    current_song = int(mpc.status()['song'])+1
-    last_song = int(mpc.status()['playlistlength'])
-    if current_song == last_song:
-        mpc.play(0)
-    else:
-        mpc.next()
+    mpc.next()
+    mpc.play()
     show_info()
 
 def previous():
