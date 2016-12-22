@@ -47,12 +47,8 @@ def show_info():
     """
     mpc_state = mpc.status()['state']
     vol_value = mpc.status()['volume']
-    try:
-        current_song = mpc.currentsong()['file']
-        current_song_id = int(mpc.status()['song'])+1
-    except KeyError:
-        current_song = "---"
-        current_song_id = "---"
+    current_song = mpc.currentsong()['file']
+    current_song_id = int(mpc.status()['song'])+1
 
     playlistlength = mpc.status()['playlistlength']
 
